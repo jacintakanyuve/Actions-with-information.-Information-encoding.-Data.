@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Информатика 5 класс: Информация, данные, кодирование и ИИ</title>
+  <style>
+    :root {
+      --bg: #f1f5f9;
+      --surface: #ffffff;
+      --surface-soft: #f8fafc;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-light: #dbeafe;
+      --accent: #7c3aed;
+      --accent-light: #ede9fe;
+      --success: #059669;
+      --success-light: #d1fae5;
+      --warning: #d97706;
+      --warning-light: #fef3c7;
+      --danger: #dc2626;
+      --danger-light: #fee2e2;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --border: #cbd5e1;
+      --radius: 16px;
+      --shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding-bottom: 48px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 16px;
+    }
+
+    .topbar-inner {
+      max-width: 880px;
+      margin: 0 auto;
+    }
+
+    .topbar-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    .timer-box {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      transition: width 0.35s ease;
+    }
+
+    .nav-pills {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-top: 10px;
+      scrollbar-width: none;
+    }
+
+    .nav-pills::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-pill {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .nav-pill.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .nav-pill.done {
+      border-color: var(--success);
+      color: var(--success);
+      background: var(--success-light);
+    }
+
+    .nav-pill.active.done {
+      background: var(--success);
+      color: #fff;
+    }
+
+    .container {
+      max-width: 880px;
+      margin: 20px auto 0;
+      padding: 0 16px;
+    }
+
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(203, 213, 225, 0.7);
+    }
+
+    .module {
+      display: none;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .module.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-size: 1.55rem;
+      line-height: 1.25;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+
+    h2 {
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+      color: var(--primary-dark);
+    }
+
+    h3 {
+      font-size: 1.08rem;
+      margin: 16px 0 8px;
+      color: var(--text);
+    }
+
+    p {
+      margin-bottom: 12px;
+    }
+
+    .time-tag {
+      display: inline-block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--accent);
+      background: var(--accent-light);
+      padding: 3px 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .callout {
+      background: var(--surface-soft);
+      border-left: 4px solid var(--primary);
+      padding: 14px 16px;
+      border-radius: 0 12px 12px 0;
+      margin: 14px 0;
+    }
+
+    .callout.warn {
+      border-left-color: var(--warning);
+      background: var(--warning-light);
+    }
+
+    .callout.success {
+      border-left-color: var(--success);
+      background: var(--success-light);
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin: 14px 0;
+    }
+
+    .info-box {
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+    }
+
+    .info-box strong {
+      display: block;
+      font-size: 1.02rem;
+      margin-bottom: 6px;
+      color: var(--primary-dark);
+    }
+
+    .interactive-zone {
+      background: #f8fafc;
+      border: 2px dashed #93c5fd;
+      border-radius: var(--radius);
+      padding: 18px;
+      margin-top: 18px;
+    }
+
+    .interactive-title {
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: var(--primary-dark);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 18px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .btn:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: #cbd5e1;
+    }
+
+    .btn-success {
+      background: var(--success);
+    }
+
+    .btn-success:hover {
+      background: #047857;
+    }
+
+    .btn-sm {
+      padding: 7px 12px;
+      font-size: 0.85rem;
+      border-radius: 8px;
+    }
+
+    .nav-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    /* Интерактив 1: Сортировка */
+    .sort-item {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .sort-buttons {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .choice-btn {
+      border: 1px solid var(--border);
+      background: var(--surface-soft);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .choice-btn.selected {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .choice-btn.correct {
+      background: var(--success);
+      color: #fff;
+      border-color: var(--success);
+    }
+
+    .choice-btn.wrong {
+      background: var(--danger);
+      color: #fff;
+      border-color: var(--danger);
+    }
+
+    /* Интерактив 2: Кодировщик */
+    .input-field {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 1rem;
+      margin: 8px 0;
+    }
+
+    .code-output {
+      background: #0f172a;
+      color: #38bdf8;
+      font-family: "Courier New", Courier, monospace;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 0.92rem;
+      word-break: break-word;
+      margin-top: 8px;
+    }
+
+    /* Интерактив 3: Носители */
+    .timeline-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin: 10px 0;
+    }
+
+    /* Квиз */
+    .quiz-q {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
+    .quiz-opt {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 9px 12px;
+      margin-top: 6px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface-soft);
+      cursor: pointer;
+      font-size: 0.92rem;
+    }
+
+    .quiz-opt.selected {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      font-weight: 600;
+    }
+
+    .quiz-opt.correct {
+      border-color: var(--success);
+      background: var(--success-light);
+      color: #065f46;
+      font-weight: 700;
+    }
+
+    .quiz-opt.wrong {
+      border-color: var(--danger);
+      background: var(--danger-light);
+      color: #991b1b;
+    }
+
+    /* Сертификат */
+    .cert-box {
+      border: 3px solid var(--primary);
+      background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
+      border-radius: 18px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 16px;
+    }
+
+    .cert-grade {
+      display: inline-block;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--success);
+      background: var(--success-light);
+      padding: 8px 20px;
+      border-radius: 12px;
+      margin: 10px 0;
+    }
+
+    .feedback {
+      margin-top: 10px;
+      font-weight: 600;
+      font-size: 0.93rem;
+    }
+
+    @media (max-width: 600px) {
+      .card { padding: 16px; }
+      h1 { font-size: 1.3rem; }
+      h2 { font-size: 1.15rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-row">
+        <span class="badge">Информатика • 5 класс</span>
+        <span class="timer-box" id="timerDisplay">Время урока: 00:00 / 45:00</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressBar"></div>
+      </div>
+      <nav class="nav-pills" id="navPills">
+        <button class="nav-pill active" onclick="goToStep(0)">Старт</button>
+        <button class="nav-pill" onclick="goToStep(1)">1. Действия</button>
+        <button class="nav-pill" onclick="goToStep(2)">2. Кодирование</button>
+        <button class="nav-pill" onclick="goToStep(3)">3. Данные</button>
+        <button class="nav-pill" onclick="goToStep(4)">4. Искусственный интеллект</button>
+        <button class="nav-pill" onclick="goToStep(5)">5. Итог и тест</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- ШАГ 0: ВВЕДЕНИЕ -->
+    <section class="module active" id="step-0">
+      <div class="card">
+        <span class="time-tag">Самостоятельный урок • 45 минут</span>
+        <h1>Действия с информацией. Кодирование. Данные и искусственный интеллект</h1>
+        <p>Привет! Сегодня ты пройдёшь полноценный урок информатики прямо на экране смартфона или компьютера. Внутри тебя ждут понятные объяснения, шифровальная лаборатория, проверка нейросети и итоговый тест.</p>
+
+        <div class="callout">
+          <strong>Как пройти урок на пятёрку:</strong><br />
+          1. Внимательно читай теорию в каждом из 4 модулей.<br />
+          2. Выполняй интерактивные задания — они помогут сразу закрепить материал.<br />
+          3. В конце пройди итоговый тест из 8 вопросов и получи карточку с результатом для учителя.
+        </div>
+
+        <label for="studentNameInput"><strong>Введи свою фамилию, имя и класс перед началом:</strong></label>
+        <input type="text" id="studentNameInput" class="input-field" placeholder="Например: Иванов Максим, 5-А" />
+
+        <div class="nav-footer">
+          <span></span>
+          <button class="btn" onclick="startLesson()">Начать урок →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ШАГ 1: ДЕЙСТВИЯ С ИНФОРМАЦИЕЙ -->
+    <section class="module" id="step-1">
+      <div class="card">
+        <span class="time-tag">Модуль 1 • Рекомендуемое время: 10 минут</span>
+        <h2>1. Действия с информацией</h2>
+        <p>Каждый день мы получаем сведения об окружающем мире: смотрим прогноз погоды, читаем сообщения, решаем задачи. Но информация не просто лежит без дела — человек и компьютер постоянно совершают с ней <strong>три главных действия</strong>.</p>
+
+        <div class="grid-3">
+          <div class="info-box">
+            <strong>1. Хранение</strong>
+            Сохранение информации так, чтобы к ней можно было вернуться позже. Примеры: запись в тетради, фотография в памяти телефона, файл на флешке, знания в нашей памяти.
+          </div>
+          <div class="info-box">
+            <strong>2. Передача</strong>
+            Перемещение информации от <em>источника</em> к <em>приёмнику</em> по каналу связи. Примеры: разговор друзей, звонок по телефону, просмотр видеоролика из интернета.
+          </div>
+          <div class="info-box">
+            <strong>3. Обработка</strong>
+            Создание новой информации из уже имеющейся или изменение её формы. Примеры: решение примера по математике, перевод текста с английского, монтаж видео.
+          </div>
+        </div>
+
+        <div class="callout">
+          <strong>Важно запомнить:</strong> при <em>передаче</em> всегда есть два участника — <strong>источник</strong> (кто отправляет) и <strong>приёмник</strong> (кто получает). А при <em>обработке</em> информация меняется по смыслу или форме (например, из условия задачи получается ответ).
+        </div>
+
+        <div class="interactive-zone">
+          <div class="interactive-title">Тренажёр: Определи действие с информацией</div>
+          <p>Выбери для каждой ситуации главное действие, которое в ней происходит, и нажми «Проверить».</p>
+          <div id="sortContainer"></div>
+          <button class="btn btn-sm" onclick="checkSortTask()">Проверить ответы</button>
+          <div class="feedback" id="sortFeedback"></div>
+        </div>
+
+        <div class="nav-footer">
+          <button class="btn btn-secondary" onclick="goToStep(0)">← Назад</button>
+          <button class="btn" onclick="goToStep(2)">Дальше: Кодирование →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ШАГ 2: КОДИРОВАНИЕ ИНФОРМАЦИИ -->
+    <section class="module" id="step-2">
+      <div class="card">
+        <span class="time-tag">Модуль 2 • Рекомендуемое время: 12 минут</span>
+        <h2>2. Кодирование информации</h2>
+        <p><strong>Код</strong> — это система условных знаков для представления информации. А процесс перевода информации в удобную для хранения, передачи или обработки форму называется <strong>кодированием</strong>. Обратный процесс (расшифровка) называется <strong>декодированием</strong>.</p>
+
+        <h3>Три основных способа кодирования:</h3>
+        <div class="grid-3">
+          <div class="info-box">
+            <strong>Графический</strong>
+            С помощью рисунков и знаков: дорожные знаки, ноты, смайлики, карты местности.
+          </div>
+          <div class="info-box">
+            <strong>Числовой</strong>
+            С помощью чисел: номера телефонов, школьные оценки, дата рождения, координаты.
+          </div>
+          <div class="info-box">
+            <strong>Символьный</strong>
+            С помощью букв и символов алфавита: текст в книге, азбука Морзе, химические формулы.
+          </div>
+        </div>
+
+        <div class="callout">
+          <strong>Как кодирует компьютер?</strong> Внутри процессора нет букв и картинок — там бегут электрические сигналы: «есть сигнал» (<strong>1</strong>) и «нет сигнала» (<strong>0</strong>). Поэтому любую информацию компьютер переводит в <strong>двоичный код</strong> из нулей и единиц.
+        </div>
+
+        <div class="interactive-zone">
+          <div class="interactive-title">Криптолаборатория: Закодируй своё слово</div>
+          <p>Напиши любое слово на русском языке (например, своё имя) и посмотри, как оно выглядит в <strong>Азбуке Морзе</strong> и в <strong>двоичном коде</strong> компьютера:</p>
+          <input type="text" id="encodeInput" class="input-field" placeholder="Введи слово, например: ИНФОРМАТИКА" oninput="updateLiveEncoder()" />
+          <div><strong>Азбука Морзе:</strong></div>
+          <div class="code-output" id="morseOut">.. -. ..-. --- .-. -- .- - .. -.- .-</div>
+          <div style="margin-top: 8px;"><strong>Двоичный код (UTF-8):</strong></div>
+          <div class="code-output" id="binOut">Введи текст выше, чтобы увидеть нули и единицы...</div>
+
+          <hr style="margin: 18px 0; border: none; border-top: 1px solid var(--border);" />
+
+          <div class="interactive-title">Мини-квест: Взломай шифр Цезаря</div>
+          <p>В древности полководец Юлий Цезарь шифровал письма, заменяя каждую букву на следующую по алфавиту (сдвиг на +1: <strong>А → Б, Б → В, В → Г</strong>...). Расшифруй секретное слово:</p>
+          <div class="callout warn" style="font-size: 1.15rem; font-weight: 800; letter-spacing: 3px; text-align: center;">
+            Ф С П Л
+          </div>
+          <p style="font-size: 0.9rem; color: var(--text-muted);">Подсказка: посмотри на буквы, которые стоят в алфавите <strong>перед</strong> Ф, С, П, Л.</p>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <input type="text" id="caesarInput" class="input-field" style="max-width: 240px; margin: 0;" placeholder="Расшифрованное слово" />
+            <button class="btn btn-sm" onclick="checkCaesar()">Расшифровать</button>
+          </div>
+          <div class="feedback" id="caesarFeedback"></div>
+        </div>
+
+        <div class="nav-footer">
+          <button class="btn btn-secondary" onclick="goToStep(1)">← Назад</button>
+          <button class="btn" onclick="goToStep(3)">Дальше: Данные →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ШАГ 3: ДАННЫЕ -->
+    <section class="module" id="step-3">
+      <div class="card">
+        <span class="time-tag">Модуль 3 • Рекомендуемое время: 10 минут</span>
+        <h2>3. Информация и данные: в чём разница?</h2>
+        <p>В повседневной речи слова «информация» и «данные» часто путают, но в информатике между ними есть чёткое различие.</p>
+
+        <div class="grid-3">
+          <div class="info-box">
+            <strong>Данные</strong>
+            Это зафиксированные на носителе сигналы, числа, текст или файлы, которые можно хранить и передавать. Сами по себе данные — это просто «сырьё».<br /><em>Пример:</em> число <strong>36,6</strong>, записанное в таблице.
+          </div>
+          <div class="info-box">
+            <strong>Информация</strong>
+            Это <strong>смысл</strong>, который человек извлекает из данных, когда понимает, что они означают.<br /><em>Пример:</em> «Температура тела человека равна 36,6 °C — значит, он здоров».
+          </div>
+        </div>
+
+        <h3>Эволюция носителей данных</h3>
+        <p>Чтобы данные не потерялись, их записывают на <strong>носитель</strong>. Нажми на кнопки ниже, чтобы проследить, как менялись носители:</p>
+        <div class="timeline-tabs">
+          <button class="btn btn-sm btn-secondary" onclick="showCarrier(0)">Древность</button>
+          <button class="btn btn-sm btn-secondary" onclick="showCarrier(1)">Бумага</button>
+          <button class="btn btn-sm btn-secondary" onclick="showCarrier(2)">Магнитные и оптические</button>
+          <button class="btn btn-sm btn-secondary" onclick="showCarrier(3)">Современные и облачные</button>
+        </div>
+        <div class="callout" id="carrierDisplay">
+          <strong>Древность (камни, глиняные таблички, папирус):</strong> данные высекали или выдавливали вручную. Они хранились тысячелетиями, но весили десятки килограммов и передавались очень медленно.
+        </div>
+
+        <div class="interactive-zone">
+          <div class="interactive-title">Детектор: Это «Данные» или уже «Информация»?</div>
+          <p>Определи, о чём идёт речь в каждом пункте:</p>
+          <div id="dataQuizContainer"></div>
+          <button class="btn btn-sm" onclick="checkDataTask()">Проверить</button>
+          <div class="feedback" id="dataFeedback"></div>
+        </div>
+
+        <div class="nav-footer">
+          <button class="btn btn-secondary" onclick="goToStep(2)">← Назад</button>
+          <button class="btn" onclick="goToStep(4)">Дальше: Искусственный интеллект →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ШАГ 4: ИСКУССТВЕННЫЙ ИНТЕЛЛЕКТ -->
+    <section class="module" id="step-4">
+      <div class="card">
+        <span class="time-tag">Модуль 4 • Рекомендуемое время: 8 минут</span>
+        <h2>4. Искусственный интеллект (ИИ) и его роль в жизни человека</h2>
+        <p><strong>Искусственный интеллект (ИИ)</strong> — это способность компьютерных программ выполнять задачи, которые раньше требовали разума человека: распознавать лица и речь, переводить тексты, водить автомобили, помогать врачам ставить диагнозы и рисовать иллюстрации.</p>
+
+        <h3>Как учится искусственный интеллект?</h3>
+        <p>Обычная программа работает по жёсткому правилу: «Если нажата кнопка А, сделай Б». А <strong>нейросеть</strong> (основа современного ИИ) учится на огромном количестве <strong>данных</strong>. Например, чтобы научиться отличать кошку от собаки, ИИ просматривает миллионы фотографий и сам находит закономерности (форму ушей, носа, усов).</p>
+
+        <div class="grid-3">
+          <div class="info-box">
+            <strong>Польза в жизни</strong>
+            Голосовые помощники, умный поиск, мгновенный переводчик, рекомендации фильмов, поиск болезней на рентгеновских снимках, прогноз погоды.
+          </div>
+          <div class="info-box">
+            <strong>Ограничения и риски</strong>
+            ИИ не обладает настоящим сознанием и чувствами. Он может уверенно выдумать неверный факт (это называют <em>«галлюцинацией» ИИ</em>).
+          </div>
+        </div>
+
+        <div class="callout warn">
+          <strong>3 золотых правила работы с ИИ:</strong><br />
+          1. <strong>Перепроверяй факты:</strong> ИИ может ошибаться в датах, формулах и цитатах.<br />
+          2. <strong>Береги личные данные:</strong> никогда не пиши в чат с нейросетью свой домашний адрес, телефон, пароли и документы.<br />
+          3. <strong>Думай сам:</strong> ИИ — помощник для идей и объяснений, но учиться и принимать решения должен человек.
+        </div>
+
+        <div class="interactive-zone">
+          <div class="interactive-title">Симулятор: Проверь ответы нейросети</div>
+          <p>Ученик задал нейросети 3 вопроса. Помоги определить, где ИИ справился отлично, а где допустил ошибку или нарушение безопасности:</p>
+          <div id="aiSimContainer"></div>
+          <button class="btn btn-sm" onclick="checkAiTask()">Проверить разбор</button>
+          <div class="feedback" id="aiFeedback"></div>
+        </div>
+
+        <div class="nav-footer">
+          <button class="btn btn-secondary" onclick="goToStep(3)">← Назад</button>
+          <button class="btn" onclick="goToStep(5)">Перейти к итоговому тесту →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ШАГ 5: ИТОГОВЫЙ ТЕСТ И СЕРТИФИКАТ -->
+    <section class="module" id="step-5">
+      <div class="card">
+        <span class="time-tag">Модуль 5 • Рекомендуемое время: 5 минут</span>
+        <h2>5. Итоговый контроль знаний</h2>
+        <p>Ответь на 8 вопросов по всем темам урока. После проверки ты получишь итоговую оценку и карточку результата.</p>
+
+        <div id="finalQuizContainer"></div>
+
+        <button class="btn btn-success" style="width: 100%; margin-top: 10px;" onclick="finishLesson()">Завершить урок и получить оценку</button>
+
+        <div id="certificateSection" style="display: none;">
+          <div class="cert-box">
+            <div style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); font-weight: 700;">
+              Карточка прохождения урока • Информатика 5 класс
+            </div>
+            <h2 id="certStudentName" style="margin: 8px 0; color: var(--text);">Ученик 5 класса</h2>
+            <p style="margin-bottom: 4px;">Тема: «Действия с информацией. Кодирование. Данные. Искусственный интеллект»</p>
+            <div class="cert-grade" id="certGradeText">Оценка: 5 (Отлично)</div>
+            <p id="certStats" style="font-weight: 600;"></p>
+            <p id="certCode" style="font-family: monospace; font-size: 0.9rem; color: var(--text-muted);"></p>
+            <div class="callout success" style="text-align: left; margin-top: 12px;">
+              Сделай скриншот этой карточки и отправь учителю для выставления оценки в журнал!
+            </div>
+          </div>
+        </div>
+
+        <div class="nav-footer">
+          <button class="btn btn-secondary" onclick="goToStep(4)">← Вернуться к теории</button>
+          <button class="btn btn-secondary btn-sm" onclick="resetAll()">Пройти урок заново</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // --- СОСТОЯНИЕ УРОКА ---
+    const state = {
+      currentStep: 0,
+      completedSteps: [false, false, false, false, false, false],
+      secondsElapsed: 0,
+      studentName: ""
+    };
+
+    // --- ТАЙМЕР ---
+    setInterval(() => {
+      state.secondsElapsed++;
+      const mins = String(Math.floor(state.secondsElapsed / 60)).padStart(2, "0");
+      const secs = String(state.secondsElapsed % 60).padStart(2, "0");
+      document.getElementById("timerDisplay").textContent = `Время урока: ${mins}:${secs} / 45:00`;
+    }, 1000);
+
+    // --- НАВИГАЦИЯ ---
+    function goToStep(stepIndex) {
+      document.querySelectorAll(".module").forEach((el, idx) => {
+        el.classList.toggle("active", idx === stepIndex);
+      });
+      document.querySelectorAll(".nav-pill").forEach((pill, idx) => {
+        pill.classList.toggle("active", idx === stepIndex);
+        pill.classList.toggle("done", state.completedSteps[idx]);
+      });
+      state.currentStep = stepIndex;
+      updateProgressBar();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function updateProgressBar() {
+      const doneCount = state.completedSteps.filter(Boolean).length;
+      const pct = Math.round((doneCount / 5) * 100);
+      document.getElementById("progressBar").style.width = `${Math.min(pct, 100)}%`;
+    }
+
+    function markStepDone(stepIndex) {
+      state.completedSteps[stepIndex] = true;
+      const pills = document.querySelectorAll(".nav-pill");
+      if (pills[stepIndex]) pills[stepIndex].classList.add("done");
+      updateProgressBar();
+    }
+
+    function startLesson() {
+      const nameVal = document.getElementById("studentNameInput").value.trim();
+      state.studentName = nameVal || "Ученик 5 класса";
+      markStepDone(0);
+      goToStep(1);
+    }
+
+    // --- ИНТЕРАКТИВ 1: СОРТИРОВКА ДЕЙСТВИЙ ---
+    const sortTasks = [
+      { text: "Школьник записывает домашнее задание в дневник", answer: "Хранение" },
+      { text: "Диктор читает новости по радио в прямом эфире", answer: "Передача" },
+      { text: "Ученик решает уравнение и находит неизвестный X", answer: "Обработка" },
+      { text: "Фотография с каникул сохранена на карту памяти", answer: "Хранение" },
+      { text: "Переводчик переводит текст с русского на английский", answer: "Обработка" },
+      { text: "Подруга отправляет голосовое сообщение в мессенджере", answer: "Передача" }
+    ];
+    const userSortAnswers = {};
+
+    function renderSortTask() {
+      const container = document.getElementById("sortContainer");
+      container.innerHTML = "";
+      sortTasks.forEach((item, idx) => {
+        const div = document.createElement("div");
+        div.className = "sort-item";
+        div.innerHTML = `
+          <div><strong>${idx + 1}.</strong> ${item.text}</div>
+          <div class="sort-buttons" id="sort-btns-${idx}">
+            ${["Хранение", "Передача", "Обработка"].map(opt => `
+              <button class="choice-btn" onclick="selectSort(${idx}, '${opt}', this)">${opt}</button>
+            `).join("")}
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function selectSort(idx, opt, btn) {
+      userSortAnswers[idx] = opt;
+      const group = document.getElementById(`sort-btns-${idx}`);
+      group.querySelectorAll(".choice-btn").forEach(b => b.classList.remove("selected", "correct", "wrong"));
+      btn.classList.add("selected");
+    }
+
+    function checkSortTask() {
+      let correct = 0;
+      sortTasks.forEach((item, idx) => {
+        const group = document.getElementById(`sort-btns-${idx}`);
+        const chosen = userSortAnswers[idx];
+        group.querySelectorAll(".choice-btn").forEach(b => {
+          b.classList.remove("selected", "correct", "wrong");
+          if (b.textContent === chosen) {
+            if (chosen === item.answer) {
+              b.classList.add("correct");
+              correct++;
+            } else {
+              b.classList.add("wrong");
+            }
+          }
+        });
+      });
+      const fb = document.getElementById("sortFeedback");
+      if (correct === sortTasks.length) {
+        fb.style.color = "var(--success)";
+        fb.textContent = `Отлично! Все ${correct} из ${sortTasks.length} ситуаций определены верно!`;
+        markStepDone(1);
+      } else {
+        fb.style.color = "var(--warning)";
+        fb.textContent = `Верно: ${correct} из ${sortTasks.length}. Исправь красные кнопки и попробуй снова!`;
+      }
+    }
+
+    // --- ИНТЕРАКТИВ 2: КОДИРОВЩИК И ШИФР ЦЕЗАРЯ ---
+    const morseMap = {
+      "А": ".-", "Б": "-...", "В": ".--", "Г": "--.", "Д": "-..", "Е": ".", "Ё": ".",
+      "Ж": "...-", "З": "--..", "И": "..", "Й": ".---", "К": "-.-", "Л": ".-..",
+      "М": "--", "Н": "-.", "О": "---", "П": ".--.", "Р": ".-.", "С": "...", "Т": "-",
+      "У": "..-", "Ф": "..-.", "Х": "....", "Ц": "-.-.", "Ч": "---.", "Ш": "----",
+      "Щ": "--.-", "Ъ": "--.--", "Ы": "-.--", "Ь": "-..-", "Э": "..-..", "Ю": "..--",
+      "Я": ".-.-", "0": "-----", "1": ".----", "2": "..---", "3": "...--", "4": "....-",
+      "5": ".....", "6": "-....", "7": "--...", "8": "---..", "9": "----.", " ": "/"
+    };
+
+    function updateLiveEncoder() {
+      const raw = document.getElementById("encodeInput").value.toUpperCase();
+      const text = raw || "ИНФОРМАТИКА";
+      const morse = text.split("").map(ch => morseMap[ch] || "?").join(" ");
+      document.getElementById("morseOut").textContent = morse;
+
+      const encoder = new TextEncoder();
+      const bytes = encoder.encode(text);
+      const binStr = Array.from(bytes).map(b => b.toString(2).padStart(8, "0")).join(" ");
+      document.getElementById("binOut").textContent = binStr;
+    }
+
+    function checkCaesar() {
+      const ans = document.getElementById("caesarInput").value.trim().toUpperCase();
+      const fb = document.getElementById("caesarFeedback");
+      if (ans === "УРОК") {
+        fb.style.color = "var(--success)";
+        fb.textContent = "Верно! Ф → У, С → Р, П → О, Л → К. Зашифрованное слово — УРОК!";
+        markStepDone(2);
+      } else {
+        fb.style.color = "var(--danger)";
+        fb.textContent = "Пока неверно. Подсказка: какая буква стоит перед Ф? А перед С? (Получится слово из 4 букв, которое идёт прямо сейчас).";
+      }
+    }
+
+    // --- ИНТЕРАКТИВ 3: НОСИТЕЛИ И ДАННЫЕ ---
+    const carriersInfo = [
+      "<strong>Древность (камни, глиняные таблички, папирус):</strong> данные высекали или выдавливали вручную. Они хранились тысячелетиями, но весили десятки килограммов и передавались очень медленно.",
+      "<strong>Бумага (книги, тетради, газеты):</strong> изобретение бумаги и книгопечатания сделало знания доступными миллионам людей. Бумага лёгкая, но боится воды и огня.",
+      "<strong>Магнитные и оптические диски (дискеты, CD, DVD):</strong> во второй половине XX века данные научились записывать с помощью намагничивания и лазерного луча.",
+      "<strong>Современные флеш-накопители и облака (SSD, карты памяти, облачные серверы):</strong> на крошечную карту памяти помещаются тысячи книг и фильмов, а облачные хранилища позволяют открыть данные с любого устройства через интернет."
+    ];
+
+    function showCarrier(idx) {
+      document.getElementById("carrierDisplay").innerHTML = carriersInfo[idx];
+    }
+
+    const dataItems = [
+      { text: "Набор символов «15.05.2026» на экране без подписи", answer: "Данные" },
+      { text: "Понимание ученика, что 15 мая — день рождения друга", answer: "Информация" },
+      { text: "Двоичные нули и единицы на жёстком диске сервера", answer: "Данные" },
+      { text: "Вывод врача после изучения анализа крови пациента", answer: "Информация" }
+    ];
+    const userDataAnswers = {};
+
+    function renderDataTask() {
+      const container = document.getElementById("dataQuizContainer");
+      container.innerHTML = "";
+      dataItems.forEach((item, idx) => {
+        const div = document.createElement("div");
+        div.className = "sort-item";
+        div.innerHTML = `
+          <div><strong>${idx + 1}.</strong> ${item.text}</div>
+          <div class="sort-buttons" id="data-btns-${idx}">
+            ${["Данные", "Информация"].map(opt => `
+              <button class="choice-btn" onclick="selectData(${idx}, '${opt}', this)">${opt}</button>
+            `).join("")}
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function selectData(idx, opt, btn) {
+      userDataAnswers[idx] = opt;
+      const group = document.getElementById(`data-btns-${idx}`);
+      group.querySelectorAll(".choice-btn").forEach(b => b.classList.remove("selected", "correct", "wrong"));
+      btn.classList.add("selected");
+    }
+
+    function checkDataTask() {
+      let ok = 0;
+      dataItems.forEach((item, idx) => {
+        const group = document.getElementById(`data-btns-${idx}`);
+        const chosen = userDataAnswers[idx];
+        group.querySelectorAll(".choice-btn").forEach(b => {
+          b.classList.remove("selected", "correct", "wrong");
+          if (b.textContent === chosen) {
+            if (chosen === item.answer) {
+              b.classList.add("correct");
+              ok++;
+            } else {
+              b.classList.add("wrong");
+            }
+          }
+        });
+      });
+      const fb = document.getElementById("dataFeedback");
+      if (ok === dataItems.length) {
+        fb.style.color = "var(--success)";
+        fb.textContent = "Верно! Ты отлично различаешь сырые данные и осмысленную информацию.";
+        markStepDone(3);
+      } else {
+        fb.style.color = "var(--warning)";
+        fb.textContent = `Правильно: ${ok} из ${dataItems.length}. Вспомни: данные — это запись на носителе, а информация — смысл для человека.`;
+      }
+    }
+
+    // --- ИНТЕРАКТИВ 4: СИМУЛЯТОР ИИ ---
+    const aiCases = [
+      {
+        text: "Нейросеть перевела фразу «Good morning» с английского на русский как «Доброе утро».",
+        answer: "Верная помощь ИИ"
+      },
+      {
+        text: "Нейросеть написала, что Пушкин изобрёл смартфон в 1825 году.",
+        answer: "Ошибка («галлюцинация») ИИ"
+      },
+      {
+        text: "Ученик хочет написать в чат ИИ свой домашний адрес и пароль от электронного дневника.",
+        answer: "Опасно! Нельзя передавать личные данные"
+      }
+    ];
+    const userAiAnswers = {};
+
+    function renderAiTask() {
+      const container = document.getElementById("aiSimContainer");
+      container.innerHTML = "";
+      aiCases.forEach((item, idx) => {
+        const div = document.createElement("div");
+        div.className = "sort-item";
+        div.innerHTML = `
+          <div><strong>Ситуация ${idx + 1}:</strong> ${item.text}</div>
+          <div class="sort-buttons" id="ai-btns-${idx}">
+            ${[
+              "Верная помощь ИИ",
+              "Ошибка («галлюцинация») ИИ",
+              "Опасно! Нельзя передавать личные данные"
+            ].map(opt => `
+              <button class="choice-btn" onclick="selectAi(${idx}, '${opt}', this)">${opt}</button>
+            `).join("")}
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function selectAi(idx, opt, btn) {
+      userAiAnswers[idx] = opt;
+      const group = document.getElementById(`ai-btns-${idx}`);
+      group.querySelectorAll(".choice-btn").forEach(b => b.classList.remove("selected", "correct", "wrong"));
+      btn.classList.add("selected");
+    }
+
+    function checkAiTask() {
+      let ok = 0;
+      aiCases.forEach((item, idx) => {
+        const group = document.getElementById(`ai-btns-${idx}`);
+        const chosen = userAiAnswers[idx];
+        group.querySelectorAll(".choice-btn").forEach(b => {
+          b.classList.remove("selected", "correct", "wrong");
+          if (b.textContent === chosen) {
+            if (chosen === item.answer) {
+              b.classList.add("correct");
+              ok++;
+            } else {
+              b.classList.add("wrong");
+            }
+          }
+        });
+      });
+      const fb = document.getElementById("aiFeedback");
+      if (ok === aiCases.length) {
+        fb.style.color = "var(--success)";
+        fb.textContent = "Супер! Ты знаешь, как безопасно и грамотно пользоваться искусственным интеллектом.";
+        markStepDone(4);
+      } else {
+        fb.style.color = "var(--warning)";
+        fb.textContent = `Верно: ${ok} из ${aiCases.length}. Проверь выделенные красным пункты.`;
+      }
+    }
+
+    // --- ИНТЕРАКТИВ 5: ИТОГОВЫЙ ТЕСТ ---
+    const finalQuestions = [
+      {
+        q: "1. Какое действие с информацией происходит, когда ученик решает задачу по математике?",
+        options: ["Хранение", "Передача", "Обработка"],
+        correct: 2
+      },
+      {
+        q: "2. Кто является приёмником информации, когда учитель объясняет новую тему классу?",
+        options: ["Учитель", "Ученики", "Школьная доска"],
+        correct: 1
+      },
+      {
+        q: "3. Как называется перевод информации в удобную для хранения или передачи форму с помощью условных знаков?",
+        options: ["Кодирование", "Удаление", "Копирование"],
+        correct: 0
+      },
+      {
+        q: "4. С помощью каких двух цифр компьютер кодирует любую информацию?",
+        options: ["1 и 2", "0 и 1", "0 и 9"],
+        correct: 1
+      },
+      {
+        q: "5. К какому способу кодирования относятся дорожные знаки и ноты?",
+        options: ["Числовому", "Графическому", "Звуковому"],
+        correct: 1
+      },
+      {
+        q: "6. Чем «данные» отличаются от «информации»?",
+        options: [
+          "Ничем, это одно и то же",
+          "Данные — это зафиксированные знаки на носителе, а информация — смысл для человека",
+          "Данные бывают только на бумаге, а информация — только в компьютере"
+        ],
+        correct: 1
+      },
+      {
+        q: "7. На чём обучается современный искусственный интеллект (нейросети)?",
+        options: [
+          "На больших массивах данных и примерах",
+          "Он читает мысли человека без обучения",
+          "Только на бумажных словарях"
+        ],
+        correct: 0
+      },
+      {
+        q: "8. Какое правило безопасности нужно соблюдать при общении с нейросетью?",
+        options: [
+          "Всегда сообщать свой пароль и домашний адрес",
+          "Верить любому ответу ИИ без проверки",
+          "Не передавать личные данные и перепроверять важные факты"
+        ],
+        correct: 2
+      }
+    ];
+    const userQuizAnswers = {};
+
+    function renderFinalQuiz() {
+      const container = document.getElementById("finalQuizContainer");
+      container.innerHTML = "";
+      finalQuestions.forEach((item, qIdx) => {
+        const div = document.createElement("div");
+        div.className = "quiz-q";
+        div.innerHTML = `
+          <div><strong>${item.q}</strong></div>
+          <div id="quiz-opts-${qIdx}">
+            ${item.options.map((opt, oIdx) => `
+              <button class="quiz-opt" onclick="selectQuizOpt(${qIdx}, ${oIdx}, this)">${opt}</button>
+            `).join("")}
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function selectQuizOpt(qIdx, oIdx, btn) {
+      userQuizAnswers[qIdx] = oIdx;
+      const box = document.getElementById(`quiz-opts-${qIdx}`);
+      box.querySelectorAll(".quiz-opt").forEach(b => b.classList.remove("selected", "correct", "wrong"));
+      btn.classList.add("selected");
+    }
+
+    function finishLesson() {
+      if (Object.keys(userQuizAnswers).length < finalQuestions.length) {
+        alert("Пожалуйста, ответь на все 8 вопросов теста перед завершением урока!");
+        return;
+      }
+
+      let score = 0;
+      finalQuestions.forEach((item, qIdx) => {
+        const box = document.getElementById(`quiz-opts-${qIdx}`);
+        const chosen = userQuizAnswers[qIdx];
+        box.querySelectorAll(".quiz-opt").forEach((b, oIdx) => {
+          b.classList.remove("selected", "correct", "wrong");
+          if (oIdx === item.correct) {
+            b.classList.add("correct");
+          } else if (oIdx === chosen && chosen !== item.correct) {
+            b.classList.add("wrong");
+          }
+        });
+        if (chosen === item.correct) score++;
+      });
+
+      let grade = 2;
+      let label = "Нужно повторить материал";
+      if (score >= 7) { grade = 5; label = "Отлично"; }
+      else if (score >= 5) { grade = 4; label = "Хорошо"; }
+      else if (score >= 4) { grade = 3; label = "Удовлетворительно"; }
+
+      markStepDone(5);
+      const mins = Math.max(1, Math.round(state.secondsElapsed / 60));
+      const checkCode = `INF5-${score}${grade}-${new Date().getDate()}${new Date().getMonth() + 1}`;
+
+      document.getElementById("certStudentName").textContent = state.studentName || "Ученик 5 класса";
+      document.getElementById("certGradeText").textContent = `Оценка: ${grade} (${label})`;
+      document.getElementById("certStats").textContent = `Правильных ответов: ${score} из ${finalQuestions.length} • Затраченное время: ~${mins} мин.`;
+      document.getElementById("certCode").textContent = `Код проверки: ${checkCode}`;
+      document.getElementById("certificateSection").style.display = "block";
+      document.getElementById("certificateSection").scrollIntoView({ behavior: "smooth" });
+    }
+
+    function resetAll() {
+      if (confirm("Сбросить все ответы и начать урок заново?")) {
+        location.reload();
+      }
+    }
+
+    // --- ИНИЦИАЛИЗАЦИЯ ---
+    renderSortTask();
+    updateLiveEncoder();
+    renderDataTask();
+    renderAiTask();
+    renderFinalQuiz();
+  </script>
+</body>
+</html>
